@@ -62,7 +62,7 @@ export default function Home() {
             Instead of watching endless tutorials, users can discover trending skills, track their growth, and connect with a like-minded community.
           </p>
           <p className="text-gray-400 text-lg leading-relaxed">
-            Whether you're a student, developer, or professional — SkillSync helps you
+            Whether you are a student, developer, or professional — SkillSync helps you
             stay updated with the latest technologies and provides you with the insights
             you need to make smart learning decisions.
           </p>
