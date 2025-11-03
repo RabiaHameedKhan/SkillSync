@@ -1,6 +1,6 @@
 "use client";
 
-import useFetch from "../../hooks/useFetch";
+import useFetch from "../../hooks/useFetch"; //custom hook to fetch the json static data
 import SkillCard from "../../components/SkillCard";
 
 

@@ -1,3 +1,5 @@
+// custom hook to fetch data from (APi or json files) without repeatinh the code
+
 "use client";
 import { useState, useEffect } from "react";
 

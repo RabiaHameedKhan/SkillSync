@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 
-export default function CommunityPage() {
-  const [posts, setPosts] = useState([
+export default function CommunityPage() { 
+  const [posts, setPosts] = useState([ //temporary mock data for users in community page
     {
       id: 1,
       name: "Sara Ahmed",

@@ -7,6 +7,8 @@ export const metadata = {
   description: "Discover trending tech skills with SkillSync",
 };
 
+
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

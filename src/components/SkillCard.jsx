@@ -1,3 +1,5 @@
+//reuseable card component for skill page
+
 "use client";
 
 export default function SkillCard({ skill }) {

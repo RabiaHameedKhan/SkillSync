@@ -2,12 +2,24 @@
 import { useState } from "react";
 
 export default function TrackPage() {
-  const [skills, setSkills] = useState([
-    { id: 1, name: "React.js", progress: 60 },
-    { id: 2, name: "Python", progress: 40 },
-    { id: 3, name: "Data Science", progress: 25 },
-  ]);
+  const [skills, setSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState("");
 
+  // Function to add new skill
+  const handleAddSkill = () => {
+    if (!newSkill.trim()) return; // ignore empty input
+
+    const newSkillObj = {
+      id: Date.now(), // unique id
+      name: newSkill.trim(),
+      progress: 0,
+    };
+
+    setSkills([...skills, newSkillObj]);
+    setNewSkill(""); // clear input
+  };
+
+  // Function to update progress
   const handleProgress = (id, change) => {
     setSkills((prevSkills) =>
       prevSkills.map((skill) =>
@@ -18,6 +30,11 @@ export default function TrackPage() {
     );
   };
 
+  // Function to delete a skill
+  const handleDelete = (id) => {
+    setSkills(skills.filter((skill) => skill.id !== id));
+  };
+
   return (
     <section className="min-h-screen bg-[#1E1E2F] text-white py-20 px-6">
       <div className="max-w-4xl mx-auto text-center">
@@ -25,43 +42,76 @@ export default function TrackPage() {
           Track Your <span className="text-[#8B5CF6]">Skill Progress</span>
         </h1>
         <p className="text-gray-400 mb-12">
-          Stay motivated and measure your learning progress visually.
+          Add your own skills and track your learning progress visually.
         </p>
 
+        {/* Add New Skill Input */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+         <input
+  type="text"
+  value={newSkill}
+  onChange={(e) => setNewSkill(e.target.value)}
+  placeholder="Enter a new skill (e.g., Next.js)"
+  className="w-full sm:w-80 px-4 py-2 rounded-lg bg-[#2A2A3D] text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:bg-[#33334A] transition-all"
+/>
+
+          <button
+            onClick={handleAddSkill}
+            className="bg-[#8B5CF6] hover:bg-[#7C3AED] px-6 py-2 rounded-lg font-semibold"
+          >
+            Add Skill
+          </button>
+        </div>
+
+        {/* Skill List */}
         <div className="space-y-6">
-          {skills.map((skill) => (
-            <div
-              key={skill.id}
-              className="bg-[#242437] p-6 rounded-2xl text-left border border-[#2A2A3D]"
-            >
-              <div className="flex justify-between items-center mb-3">
-                <h3 className="text-xl font-semibold">{skill.name}</h3>
-                <span className="text-[#8B5CF6]">{skill.progress}%</span>
-              </div>
+          {skills.length === 0 ? (
+            <p className="text-gray-400">No skills added yet. Start by adding one above!</p>
+          ) : (
+            skills.map((skill) => (
+              <div
+                key={skill.id}
+                className="bg-[#242437] p-6 rounded-2xl text-left border border-[#2A2A3D]"
+              >
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="text-xl font-semibold">{skill.name}</h3>
+                  <div className="flex items-center gap-3">
+                    <span className="text-[#8B5CF6]">{skill.progress}%</span>
+                    <button
+                      onClick={() => handleDelete(skill.id)}
+                      className="text-red-400 hover:text-red-500 text-sm"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
 
-              <div className="w-full bg-[#1E1E2F] h-3 rounded-full mb-4">
-                <div
-                  className="h-3 bg-[#8B5CF6] rounded-full"
-                  style={{ width: `${skill.progress}%` }}
-                ></div>
-              </div>
+                {/* Progress Bar */}
+                <div className="w-full bg-[#1E1E2F] h-3 rounded-full mb-4">
+                  <div
+                    className="h-3 bg-[#8B5CF6] rounded-full"
+                    style={{ width: `${skill.progress}%` }}
+                  ></div>
+                </div>
 
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={() => handleProgress(skill.id, -10)}
-                  className="px-4 py-2 bg-[#2A2A3D] hover:bg-[#3A3A4D] rounded-lg text-sm"
-                >
-                  - Decrease
-                </button>
-                <button
-                  onClick={() => handleProgress(skill.id, +10)}
-                  className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] rounded-lg text-sm"
-                >
-                  + Increase
-                </button>
+                {/* Buttons */}
+                <div className="flex justify-end gap-3">
+                  <button
+                    onClick={() => handleProgress(skill.id, -10)}
+                    className="px-4 py-2 bg-[#2A2A3D] hover:bg-[#3A3A4D] rounded-lg text-sm"
+                  >
+                    - Progress
+                  </button>
+                  <button
+                    onClick={() => handleProgress(skill.id, +10)}
+                    className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] rounded-lg text-sm"
+                  >
+                    + Progress
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
       </div>
     </section>

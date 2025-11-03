@@ -1,3 +1,6 @@
+//Home Page (contains about section too)
+
+
 "use client";
 import Link from "next/link";
 import { BookOpen, BarChart3, Users } from "lucide-react";
@@ -11,14 +14,14 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('/herobg.jpg')", // Image in /public folder
+            backgroundImage: "url('images/herobg.jpg')", // Image in /public folder
           }}
         />
 
-        {/* Dark Overlay */}
+        
         <div className="absolute inset-0 bg-black/60"></div>
 
-        {/* Content */}
+       
         <div className="relative z-10 max-w-3xl px-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
             Master New Skills, <br />

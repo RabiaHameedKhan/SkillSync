@@ -43,6 +43,13 @@ return(
       >
         Track Skills
       </Link>
+
+      <Link
+        href="/community"
+        className="hover:text-[#8B5CF6] transition-colors duration-200"
+      >
+        Community
+      </Link>
     </div>
 
     {/* Social Icons */}
@@ -70,7 +77,7 @@ return(
 
   {/* Bottom Text */}
   <div className="text-center text-sm text-gray-500 mt-8 border-t border-[#2A2A3D] pt-6">
-    © {new Date().getFullYear()} SkillSync. All rights reserved.
+    © {new Date().getFullYear()} SkillSync. By Rabia Khan. All rights reserved.
   </div>
 </footer>
 
