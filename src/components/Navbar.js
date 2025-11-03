@@ -41,7 +41,7 @@ export default function Navbar() {
         {/* CTA Button */}
         <div className="hidden md:block">
           <Link
-            href="/join"
+            href="/login"
             className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-5 py-2.5 rounded-xl text-lg transition-all duration-200"
           >
             Join Now
@@ -72,7 +72,7 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="/join"
+              href="/login"
               onClick={() => setIsOpen(false)}
               className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-5 py-2.5 rounded-xl text-center text-lg transition-all duration-200"
             >
