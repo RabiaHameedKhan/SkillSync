@@ -1,66 +1,32 @@
 "use client";
-import { Layout, Database, Palette, Brain, Cpu, Code2 } from "lucide-react";
+import { Code2, Palette, Cpu, Layout } from "lucide-react";
 
-const skills = [
-  {
-    name: "Frontend Development",
-    icon: Layout,
-    desc: "Building modern, responsive interfaces using Next.js and Tailwind CSS.",
-  },
-  {
-    name: "Backend Development",
-    icon: Database,
-    desc: "Creating efficient APIs and backend logic with Node.js and Express.",
-  },
-  {
-    name: "UI/UX Design",
-    icon: Palette,
-    desc: "Designing beautiful, intuitive layouts that enhance user experience.",
-  },
-  {
-    name: "Problem Solving",
-    icon: Brain,
-    desc: "Strong understanding of data structures and algorithms to solve complex problems.",
-  },
-  {
-    name: "Machine Learning",
-    icon: Cpu,
-    desc: "Exploring AI models and integrating ML logic into real-world projects.",
-  },
-  {
-    name: "Programming Languages",
-    icon: Code2,
-    desc: "Proficient in JavaScript, Python, and C++ for full-stack solutions.",
-  },
+const trendingSkills = [
+  { name: "Web Development", icon: <Layout size={36} />, desc: "Learn how to build websites using React, Next.js and Tailwind." },
+  { name: "UI/UX Design", icon: <Palette size={36} />, desc: "Master the art of creating beautiful and user-friendly interfaces." },
+  { name: "Machine Learning", icon: <Cpu size={36} />, desc: "Understand ML concepts and build models using Python." },
+  { name: "Programming Logic", icon: <Code2 size={36} />, desc: "Improve your problem-solving skills with coding challenges." },
 ];
 
 export default function SkillsPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-purple-800 to-purple-900 text-white py-16 px-6">
+    <section className="min-h-screen bg-[#1E1E2F] text-white py-20 px-6">
       <div className="max-w-6xl mx-auto text-center">
-        <h1 className="text-4xl font-bold mb-4">My Skills</h1>
-        <div className="w-24 h-1 bg-purple-400 mx-auto mb-6 rounded-full"></div>
-        <p className="text-purple-200 max-w-2xl mx-auto mb-12">
-          Here’s a look at the tools and technologies I use to turn ideas into
-          real, interactive experiences.
-        </p>
+        <h1 className="text-4xl font-bold mb-4">
+          Explore <span className="text-[#8B5CF6]">Trending Skills</span>
+        </h1>
+        <p className="text-gray-400 mb-12">Stay updated with the latest in-demand skills to boost your learning journey.</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {skills.map((skill, index) => {
-            const Icon = skill.icon;
-            return (
-              <div
-                key={index}
-                className="bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-purple-500/30 flex flex-col items-center text-center"
-              >
-                <Icon size={40} className="text-purple-300 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">{skill.name}</h3>
-                <p className="text-purple-200 text-sm">{skill.desc}</p>
-              </div>
-            );
-          })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {trendingSkills.map((skill, index) => (
+            <div key={index} className="bg-[#2A2A3D] rounded-2xl p-6 shadow-lg hover:scale-105 transition-transform">
+              <div className="text-[#8B5CF6] mb-4 flex justify-center">{skill.icon}</div>
+              <h3 className="text-xl font-semibold mb-2">{skill.name}</h3>
+              <p className="text-gray-400 text-sm">{skill.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }
