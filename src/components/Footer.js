@@ -23,6 +23,7 @@ return(
       >
         Home
       </Link>
+
       <Link
         href="/skills"
         className="hover:text-[#8B5CF6] transition-colors duration-200"
@@ -30,10 +31,17 @@ return(
         Skills
       </Link>
       <Link
-        href="#about"
+        href="/#about"
         className="hover:text-[#8B5CF6] transition-colors duration-200"
       >
         About
+      </Link>
+
+      <Link
+        href="/track"
+        className="hover:text-[#8B5CF6] transition-colors duration-200"
+      >
+        Track Skills
       </Link>
     </div>
 

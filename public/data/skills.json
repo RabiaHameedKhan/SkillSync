@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "React.js",
+    "category": "Frontend Development",
+    "level": "Intermediate",
+    "description": "Learn to build dynamic user interfaces using components, hooks, and modern React patterns.",
+    "icon": "⚛️"
+  },
+  {
+    "id": 2,
+    "name": "Python",
+    "category": "Programming",
+    "level": "Beginner",
+    "description": "Understand Python fundamentals and build small projects with it.",
+    "icon": "🐍"
+  },
+  {
+    "id": 3,
+    "name": "Data Science",
+    "category": "AI & Analytics",
+    "level": "Advanced",
+    "description": "Learn data analysis, visualization, and machine learning basics.",
+    "icon": "📊"
+  }
+]
