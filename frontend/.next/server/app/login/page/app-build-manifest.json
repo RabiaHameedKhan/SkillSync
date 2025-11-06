@@ -1,0 +1,22 @@
+{
+  "pages": {
+    "/login/page": [
+      "static/chunks/skill-sync_frontend_src_app_globals_b3fb1f52.css",
+      "static/chunks/77d5f_927ffa5e._.js",
+      "static/chunks/skill-sync_frontend_src_components_Navbar_6c156112.js",
+      "static/chunks/skill-sync_frontend_src_app_layout_47813fe1.js",
+      "static/chunks/77d5f_next_dist_client_components_builtin_global-error_b74330ac.js",
+      "static/chunks/skill-sync_frontend_src_app_login_page_c8930d89.js",
+      "static/chunks/skill-sync_frontend_src_app_login_page_b74330ac.js",
+      "static/chunks/[turbopack]_browser_dev_hmr-client_hmr-client_ts_bb8a174d._.js",
+      "static/chunks/77d5f_next_dist_compiled_react-dom_24b37a63._.js",
+      "static/chunks/77d5f_next_dist_compiled_next-devtools_index_e5d541e2.js",
+      "static/chunks/77d5f_next_dist_compiled_d9c68770._.js",
+      "static/chunks/77d5f_next_dist_client_34ee0420._.js",
+      "static/chunks/77d5f_next_dist_2d468e90._.js",
+      "static/chunks/77d5f_@swc_helpers_cjs_a4808f48._.js",
+      "static/chunks/skill-sync_frontend_a0ff3932._.js",
+      "static/chunks/turbopack-skill-sync_frontend_07ec455a._.js"
+    ]
+  }
+}

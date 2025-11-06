@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///D:/Rabia/Web%20Development/Next%20JS/skill-sync/src/app/layout.js"],"sourcesContent":["import \"./globals.css\";\nimport Navbar from \"./components/Navbar\";\nimport Footer from \"./components/Footer\";\n\nexport const metadata = {\n  title: \"SkillSync\",\n  description: \"Discover trending tech skills with SkillSync\",\n};\n\nexport default function RootLayout({ children }) {\n  return (\n    <html lang=\"en\">\n      <body className=\"bg-gray-50 text-gray-900\">\n        <Navbar />\n        <main >{children}</main> \n        <Footer/>\n\n      </body>\n    </html>\n  );\n}\n"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;;;AAIO,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;AAEe,SAAS,WAAW,EAAE,QAAQ,EAAE;IAC7C,qBACE,+PAAC;QAAK,MAAK;kBACT,cAAA,+PAAC;YAAK,WAAU;;8BACd,+PAAC;;;;;8BACD,+PAAC;8BAAO;;;;;;8BACR,+PAAC;;;;;;;;;;;;;;;;AAKT","debugId":null}},
+    {"offset": {"line": 68, "column": 0}, "map": {"version":3,"sources":["file:///D:/Rabia/Web%20Development/Next%20JS/skill-sync/node_modules/next/src/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = (\n  require('../../module.compiled') as typeof import('../../module.compiled')\n).vendored['react-rsc']!.ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":"AAAAA,OAAOC,OAAO,GACZC,QAAQ,uIACRC,QAAQ,CAAC,YAAY,CAAEC,kBAAkB","ignoreList":[0],"debugId":null}}]
+}

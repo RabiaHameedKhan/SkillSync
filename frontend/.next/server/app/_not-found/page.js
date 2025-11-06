@@ -1,0 +1,11 @@
+var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/_not-found/page.js")
+R.c("server/chunks/ssr/dfa58_next_dist_c2e9e9b1._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__7f148858._.js")
+R.c("server/chunks/ssr/skill-sync_e25adb99._.js")
+R.c("server/chunks/ssr/dfa58_next_dist_client_components_cbca12b5._.js")
+R.c("server/chunks/ssr/dfa58_next_dist_client_components_builtin_forbidden_3c37817b.js")
+R.c("server/chunks/ssr/dfa58_next_dist_37bda49b._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__04179e0f._.js")
+R.m("[project]/skill-sync/.next-internal/server/app/_not-found/page/actions.js [app-rsc] (server actions loader, ecmascript)")
+R.m("[project]/skill-sync/node_modules/next/dist/esm/build/templates/app-page.js?page=/_not-found/page { MODULE_0 => \"[project]/skill-sync/src/app/layout.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_1 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_2 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_3 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_4 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\" } [app-rsc] (ecmascript)")
+module.exports=R.m("[project]/skill-sync/node_modules/next/dist/esm/build/templates/app-page.js?page=/_not-found/page { MODULE_0 => \"[project]/skill-sync/src/app/layout.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_1 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_2 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/forbidden.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_3 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/unauthorized.js [app-rsc] (ecmascript, Next.js Server Component)\", MODULE_4 => \"[project]/skill-sync/node_modules/next/dist/client/components/builtin/not-found.js [app-rsc] (ecmascript, Next.js Server Component)\" } [app-rsc] (ecmascript)").exports

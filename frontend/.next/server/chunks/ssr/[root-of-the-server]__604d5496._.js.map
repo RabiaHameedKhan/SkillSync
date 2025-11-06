@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 15, "column": 0}, "map": {"version":3,"sources":["file:///D:/Rabia/Web%20Development/Next%20JS/skill-sync/src/app/page.js"],"sourcesContent":["export default function Home() {\n  return (\n    <main className=\"min-h-screen flex flex-col items-center justify-center bg-gray-100 text-center p-6\">\n      <h1 className=\"text-4xl font-bold text-blue-600 mb-4\">\n        SkillSync Setup Successful 🎉\n      </h1>\n      <p className=\"text-gray-700 text-lg\">\n        Tailwind CSS and Next.js are working perfectly!\n      </p>\n      <button className=\"mt-6 bg-blue-600 hover:bg-blue-900 text-white px-6 py-2 rounded-lg shadow-md transition\">\n        Test Button\n      </button>\n    </main>\n  );\n}\n"],"names":[],"mappings":";;;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAK,WAAU;;0BACd,8OAAC;gBAAG,WAAU;0BAAwC;;;;;;0BAGtD,8OAAC;gBAAE,WAAU;0BAAwB;;;;;;0BAGrC,8OAAC;gBAAO,WAAU;0BAA0F;;;;;;;;;;;;AAKlH","debugId":null}}]
+}
