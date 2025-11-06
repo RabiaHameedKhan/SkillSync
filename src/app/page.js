@@ -34,7 +34,7 @@ export default function Home() {
 
           <div className="flex justify-center gap-4">
             <Link
-              href="/join"
+              href="/login"
               className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-6 py-3 rounded-xl text-lg transition-all duration-200"
             >
               Get Started

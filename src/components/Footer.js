@@ -41,7 +41,7 @@ return(
         href="/track"
         className="hover:text-[#8B5CF6] transition-colors duration-200"
       >
-        Track Skills
+        Tracking 
       </Link>
 
       <Link
