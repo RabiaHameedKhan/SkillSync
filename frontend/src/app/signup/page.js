@@ -1,6 +1,9 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { supabase } from "../../lib/supabaseClient"; // adjust path if needed
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -10,16 +13,15 @@ export default function SignupPage() {
     confirmPassword: "",
   });
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-
-
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const { name, email, password, confirmPassword } = formData;
@@ -34,9 +36,25 @@ export default function SignupPage() {
       return;
     }
 
-    
-    //Backedn part required
-    setMessage("✅ Signup submitted (waiting for backend)");
+    setLoading(true);
+    setMessage("");
+
+    // Supabase signup
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { name }, 
+      },
+    });
+
+    if (error) {
+      setMessage(`❌ ${error.message}`);
+      setLoading(false);
+    } else {
+      setMessage("✅ Account created!");
+      setTimeout(() => router.push("/login"), 1500);
+    }
   };
 
   return (
@@ -97,7 +115,9 @@ export default function SignupPage() {
           </div>
 
           <div>
-            <label className="block text-gray-300 mb-2 text-sm">Confirm Password</label>
+            <label className="block text-gray-300 mb-2 text-sm">
+              Confirm Password
+            </label>
             <input
               type="password"
               name="confirmPassword"
@@ -110,9 +130,14 @@ export default function SignupPage() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-[#8B5CF6] hover:bg-[#7C3AED] transition-all duration-200 rounded-lg font-semibold text-lg shadow-lg hover:shadow-[#8B5CF6]/30"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg font-semibold text-lg shadow-lg transition-all duration-200 ${
+              loading
+                ? "bg-[#8B5CF6]/50 cursor-not-allowed"
+                : "bg-[#8B5CF6] hover:bg-[#7C3AED] hover:shadow-[#8B5CF6]/30"
+            }`}
           >
-            Sign Up
+            {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>
 

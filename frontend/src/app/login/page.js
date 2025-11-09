@@ -1,13 +1,18 @@
 "use client";
+
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { supabase } from "../../lib/supabaseClient"; // adjust path if needed
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email || !password) {
@@ -15,16 +20,28 @@ export default function LoginPage() {
       return;
     }
 
-    // backend part required
-    setMessage("✅ Login submitted (waiting for backend)");
+    setLoading(true);
+    setMessage("");
+
+    // Supabase authentication
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      setMessage(`❌ ${error.message}`);
+      setLoading(false);
+    } else {
+      setMessage("✅ Login successful! Redirecting...");
+      setTimeout(() => router.push("/"), 1000);
+    }
   };
 
   return (
     <main
       className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
-      style={{
-        backgroundImage: "url('/images/herobg.jpg')",
-      }}
+      style={{ backgroundImage: "url('/images/herobg.jpg')" }}
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
@@ -64,9 +81,14 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className="w-full py-3 bg-[#8B5CF6] hover:bg-[#7C3AED] transition-all duration-200 rounded-lg font-semibold text-lg shadow-lg hover:shadow-[#8B5CF6]/30"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg font-semibold text-lg shadow-lg transition-all duration-200 ${
+              loading
+                ? "bg-[#8B5CF6]/50 cursor-not-allowed"
+                : "bg-[#8B5CF6] hover:bg-[#7C3AED] hover:shadow-[#8B5CF6]/30"
+            }`}
           >
-            Log In
+            {loading ? "Logging in..." : "Log In"}
           </button>
         </form>
 
@@ -76,7 +98,7 @@ export default function LoginPage() {
 
         <div className="mt-8 text-center text-sm text-gray-400">
           <p>
-            Dont have an account?{" "}
+            Don't have an account?{" "}
             <Link href="/signup" className="text-[#8B5CF6] hover:underline">
               Sign up
             </Link>

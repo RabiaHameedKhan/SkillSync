@@ -1,10 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react"; // icons
+import { Menu, X } from "lucide-react";
+import { supabase } from "../lib/supabaseClient"; // adjust path if needed
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const router = useRouter();
 
   const navLinks = [
     { name: "Home", path: "/" },
@@ -13,6 +17,29 @@ export default function Navbar() {
     { name: "Community", path: "/community" },
     { name: "About", path: "/#about" },
   ];
+
+  // ✅ Check for existing session
+  useEffect(() => {
+    const getSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setUser(data?.session?.user || null);
+    };
+    getSession();
+
+    // ✅ Listen to auth changes (login / logout)
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  // ✅ Handle logout
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    router.push("/"); // redirect to home
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-[#1E1E2F]/90 backdrop-blur-md border-b border-[#2A2A3D]">
@@ -38,14 +65,23 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* CTA Button */}
+        {/* CTA / Auth Button */}
         <div className="hidden md:block">
-          <Link
-            href="/login"
-            className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-5 py-2.5 rounded-xl text-lg transition-all duration-200"
-          >
-            Join Now
-          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="bg-transparent border border-[#8B5CF6] hover:bg-[#8B5CF6]/20 text-white font-semibold px-5 py-2.5 rounded-xl text-lg transition-all duration-200"
+            >
+              Log Out
+            </button>
+          ) : (
+            <Link
+              href="/login"
+              className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-5 py-2.5 rounded-xl text-lg transition-all duration-200"
+            >
+              Join Now
+            </Link>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -71,13 +107,26 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <Link
-              href="/login"
-              onClick={() => setIsOpen(false)}
-              className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-5 py-2.5 rounded-xl text-center text-lg transition-all duration-200"
-            >
-              Join Now
-            </Link>
+
+            {user ? (
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsOpen(false);
+                }}
+                className="bg-transparent border border-[#8B5CF6] hover:bg-[#8B5CF6]/20 text-white font-semibold px-5 py-2.5 rounded-xl text-center text-lg transition-all duration-200"
+              >
+                Log Out
+              </button> 
+            ) : (
+              <Link
+                href="/login"
+                onClick={() => setIsOpen(false)}
+                className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-5 py-2.5 rounded-xl text-center text-lg transition-all duration-200"
+              >
+                Join Now
+              </Link>
+            )}
           </div>
         </div>
       )}
