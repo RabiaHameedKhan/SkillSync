@@ -27,7 +27,7 @@ export default function SignupPage() {
     const { name, email, password, confirmPassword } = formData;
 
     if (!name || !email || !password || !confirmPassword) {
-      setMessage("⚠️ Please fill in all fields.");
+      setMessage("⚠️ Please fill in all fields");
       return;
     }
 
