@@ -16,7 +16,7 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!email || !password) {
-      setMessage("⚠️ Please fill in all fields.");
+      setMessage("⚠️ Please fill in all fields");
       return;
     }
 
