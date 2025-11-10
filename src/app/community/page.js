@@ -1,8 +1,13 @@
 "use client";
-import { useState } from "react";
 
-export default function CommunityPage() { 
-  const [posts, setPosts] = useState([ //temporary mock data for users in community page
+import { useState } from "react";
+import useCheckUser from "@/lib/checkUser";
+
+export default function CommunityPage() {
+  // ✅ Always put hooks at the top
+  const { user, loading } = useCheckUser();
+  const [posts, setPosts] = useState([
+    // Temporary mock data for community users
     {
       id: 1,
       name: "Sara Ahmed",
@@ -18,15 +23,29 @@ export default function CommunityPage() {
       comments: [],
     },
   ]);
-
   const [newPost, setNewPost] = useState("");
   const [commentText, setCommentText] = useState({});
 
+  // 🕐 Loading state while checking auth
+  if (loading) {
+    return <div className="text-center text-white p-10">Checking login...</div>;
+  }
+
+  // 🚫 If user is not logged in
+  if (!user) {
+    return (
+      <div className="text-center text-white p-10">
+        Please log in to join the community and interact with others.
+      </div>
+    );
+  }
+
+  // ➕ Add new post
   const handleAddPost = () => {
     if (newPost.trim()) {
       const newEntry = {
         id: Date.now(),
-        name: "You",
+        name: user?.email?.split("@")[0] || "You", // show logged-in user's name
         content: newPost,
         likes: 0,
         comments: [],
@@ -36,6 +55,7 @@ export default function CommunityPage() {
     }
   };
 
+  // ❤️ Like post
   const handleLike = (id) => {
     setPosts((prev) =>
       prev.map((post) =>
@@ -44,6 +64,7 @@ export default function CommunityPage() {
     );
   };
 
+  // 💬 Add comment
   const handleAddComment = (id) => {
     const text = commentText[id]?.trim();
     if (!text) return;
@@ -57,6 +78,7 @@ export default function CommunityPage() {
     setCommentText({ ...commentText, [id]: "" });
   };
 
+  // 🧩 Main UI
   return (
     <section className="min-h-screen bg-[#1E1E2F] text-white py-20 px-6">
       <div className="max-w-3xl mx-auto">

@@ -1,25 +1,43 @@
 "use client";
+
 import { useState } from "react";
+import useCheckUser from "@/lib/checkUser";
 
 export default function TrackPage() {
+  // 🧠 Always put hooks at the very top (before any condition)
+  const { user, loading } = useCheckUser();
   const [skills, setSkills] = useState([]);
   const [newSkill, setNewSkill] = useState("");
 
-  // Function to add new skill
+  // 🕐 Loading state (safe to return JSX here)
+  if (loading) {
+    return <div className="text-center text-white p-10">Checking login...</div>;
+  }
+
+  // 🚫 If not logged in
+  if (!user) {
+    return (
+      <div className="text-center text-white p-10">
+        Please log in to access your Skill Tracker.
+      </div>
+    );
+  }
+
+  // ➕ Function to add new skill
   const handleAddSkill = () => {
-    if (!newSkill.trim()) return; // ignore empty input
+    if (!newSkill.trim()) return;
 
     const newSkillObj = {
-      id: Date.now(), // unique id
+      id: Date.now(),
       name: newSkill.trim(),
       progress: 0,
     };
 
     setSkills([...skills, newSkillObj]);
-    setNewSkill(""); // clear input
+    setNewSkill("");
   };
 
-  // Function to update progress
+  // 🔼🔽 Function to update progress
   const handleProgress = (id, change) => {
     setSkills((prevSkills) =>
       prevSkills.map((skill) =>
@@ -30,11 +48,12 @@ export default function TrackPage() {
     );
   };
 
-  // Function to delete a skill
+  // ❌ Delete a skill
   const handleDelete = (id) => {
     setSkills(skills.filter((skill) => skill.id !== id));
   };
 
+  // 🧩 UI section
   return (
     <section className="min-h-screen bg-[#1E1E2F] text-white py-20 px-6">
       <div className="max-w-4xl mx-auto text-center">
@@ -47,14 +66,13 @@ export default function TrackPage() {
 
         {/* Add New Skill Input */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-         <input
-  type="text"
-  value={newSkill}
-  onChange={(e) => setNewSkill(e.target.value)}
-  placeholder="Enter a new skill (e.g., Next.js)"
-  className="w-full sm:w-80 px-4 py-2 rounded-lg bg-[#2A2A3D] text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:bg-[#33334A] transition-all"
-/>
-
+          <input
+            type="text"
+            value={newSkill}
+            onChange={(e) => setNewSkill(e.target.value)}
+            placeholder="Enter a new skill (e.g., Next.js)"
+            className="w-full sm:w-80 px-4 py-2 rounded-lg bg-[#2A2A3D] text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:bg-[#33334A] transition-all"
+          />
           <button
             onClick={handleAddSkill}
             className="bg-[#8B5CF6] hover:bg-[#7C3AED] px-6 py-2 rounded-lg font-semibold"
@@ -66,7 +84,9 @@ export default function TrackPage() {
         {/* Skill List */}
         <div className="space-y-6">
           {skills.length === 0 ? (
-            <p className="text-gray-400">No skills added yet. Start by adding one above!</p>
+            <p className="text-gray-400">
+              No skills added yet. Start by adding one above!
+            </p>
           ) : (
             skills.map((skill) => (
               <div

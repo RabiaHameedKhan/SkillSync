@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { supabase } from "../lib/supabaseClient"; // adjust path if needed
+import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/navigation";
 
 export default function Navbar() {
@@ -10,7 +10,8 @@ export default function Navbar() {
   const [user, setUser] = useState(null);
   const router = useRouter();
 
-  const navLinks = [
+  // Full list of pages
+  const allLinks = [
     { name: "Home", path: "/" },
     { name: "Skills", path: "/skills" },
     { name: "Track Skill", path: "/track" },
@@ -18,7 +19,14 @@ export default function Navbar() {
     { name: "About", path: "/#about" },
   ];
 
-  // ✅ Check for existing session
+  // Links to show if user is not logged in
+  const publicLinks = [
+    { name: "Home", path: "/" },
+    { name: "Skills", path: "/skills" },
+    { name: "About", path: "/#about" },
+  ];
+
+  // ✅ Check session and listen to auth changes
   useEffect(() => {
     const getSession = async () => {
       const { data } = await supabase.auth.getSession();
@@ -26,7 +34,6 @@ export default function Navbar() {
     };
     getSession();
 
-    // ✅ Listen to auth changes (login / logout)
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user || null);
     });
@@ -40,6 +47,9 @@ export default function Navbar() {
     setUser(null);
     router.push("/"); // redirect to home
   };
+
+  // Decide which links to show based on login
+  const navLinks = user ? allLinks : publicLinks;
 
   return (
     <nav className="sticky top-0 z-50 w-full bg-[#1E1E2F]/90 backdrop-blur-md border-b border-[#2A2A3D]">
@@ -117,7 +127,7 @@ export default function Navbar() {
                 className="bg-transparent border border-[#8B5CF6] hover:bg-[#8B5CF6]/20 text-white font-semibold px-5 py-2.5 rounded-xl text-center text-lg transition-all duration-200"
               >
                 Log Out
-              </button> 
+              </button>
             ) : (
               <Link
                 href="/login"
