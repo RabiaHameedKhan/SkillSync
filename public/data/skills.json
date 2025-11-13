@@ -5,7 +5,14 @@
     "category": "Frontend Development",
     "level": "Intermediate",
     "description": "Learn to build dynamic user interfaces using components, hooks, and modern React patterns.",
-    "icon": "⚛️"
+    "icon": "⚛️",
+    "milestones": [
+      "Understand JSX & Components",
+      "Learn Props & State",
+      "Use React Hooks (useState, useEffect)",
+      "Work with Events & Forms",
+      "Build a Complete React Project"
+    ]
   },
   {
     "id": 2,
@@ -13,7 +20,14 @@
     "category": "Programming",
     "level": "Beginner",
     "description": "Understand Python fundamentals and build small projects with it.",
-    "icon": "🐍"
+    "icon": "🐍",
+    "milestones": [
+      "Learn Syntax & Variables",
+      "Understand Data Types & Operators",
+      "Use Loops & Conditionals",
+      "Write Functions & Modules",
+      "Build a Mini Python Project"
+    ]
   },
   {
     "id": 3,
@@ -21,6 +35,88 @@
     "category": "AI & Analytics",
     "level": "Advanced",
     "description": "Learn data analysis, visualization, and machine learning basics.",
-    "icon": "📊"
+    "icon": "📊",
+    "milestones": [
+      "Learn Data Cleaning & Preprocessing",
+      "Perform Data Visualization",
+      "Understand Statistics & Probability",
+      "Explore Machine Learning Algorithms",
+      "Build a Data Analysis Project"
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Node.js",
+    "category": "Backend Development",
+    "level": "Intermediate",
+    "description": "Create scalable backend services and REST APIs using Node.js and Express.",
+    "icon": "🟢",
+    "milestones": [
+      "Learn Node.js Basics",
+      "Understand Modules & NPM",
+      "Use Express.js for Routing",
+      "Connect Node.js with MongoDB",
+      "Build a REST API Project"
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Tailwind CSS",
+    "category": "Frontend Design",
+    "level": "Intermediate",
+    "description": "Style modern, responsive layouts quickly using utility-first CSS classes.",
+    "icon": "🎨",
+    "milestones": [
+      "Understand Utility Classes",
+      "Master Layout (Flex/Grid)",
+      "Use Responsive Design",
+      "Apply Custom Themes & Colors",
+      "Build a Styled Landing Page"
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Next.js",
+    "category": "Full Stack Development",
+    "level": "Advanced",
+    "description": "Build fast, SEO-friendly React apps with server-side rendering and API routes.",
+    "icon": "🚀",
+    "milestones": [
+      "Learn Pages & Routing",
+      "Understand SSR & SSG",
+      "Use API Routes",
+      "Connect Backend & Database",
+      "Deploy a Full Stack App"
+    ]
+  },
+  {
+    "id": 7,
+    "name": "TypeScript",
+    "category": "Programming",
+    "level": "Intermediate",
+    "description": "Improve your JavaScript codebase with static typing and modern tooling.",
+    "icon": "🔷",
+    "milestones": [
+      "Learn Basic Types & Interfaces",
+      "Use Functions & Generics",
+      "Understand Type Inference",
+      "Integrate with React",
+      "Refactor a JS Project to TS"
+    ]
+  },
+  {
+    "id": 8,
+    "name": "Git & GitHub",
+    "category": "Version Control",
+    "level": "Beginner",
+    "description": "Learn version control basics and collaborate on projects using GitHub.",
+    "icon": "🧭",
+    "milestones": [
+      "Understand Git Basics & Commands",
+      "Learn Branching & Merging",
+      "Use GitHub for Collaboration",
+      "Handle Pull Requests",
+      "Contribute to Open Source"
+    ]
   }
 ]

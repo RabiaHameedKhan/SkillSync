@@ -2,19 +2,40 @@
 
 import { useState } from "react";
 import useCheckUser from "@/lib/checkUser";
+import useFetch from "@/hooks/useFetch";
 
 export default function TrackPage() {
-  // 🧠 Always put hooks at the very top (before any condition)
   const { user, loading } = useCheckUser();
-  const [skills, setSkills] = useState([]);
-  const [newSkill, setNewSkill] = useState("");
+  const { data: predefinedSkills, loading: skillsLoading } = useFetch("/data/skills.json");
 
-  // 🕐 Loading state (safe to return JSX here)
-  if (loading) {
-    return <div className="text-center text-white p-10">Checking login...</div>;
+  const [selectedSkill, setSelectedSkill] = useState(null);
+  const [milestones, setMilestones] = useState([]);
+
+  
+  const handleSelectSkill = (skill) => {
+    setSelectedSkill(skill);
+    setMilestones(skill.milestones.map((m) => ({ name: m, completed: false })));
+  };
+
+  //  Toggle milestone completion
+  const toggleMilestone = (index) => {
+    const updated = [...milestones];
+    updated[index].completed = !updated[index].completed;
+    setMilestones(updated);
+  };
+
+  // Calculate progress
+  const progress =
+    milestones.length > 0
+      ? Math.round(
+          (milestones.filter((m) => m.completed).length / milestones.length) * 100
+        )
+      : 0;
+
+  if (loading || skillsLoading) {
+    return <div className="text-center text-white p-10">Loading your tracker...</div>;
   }
 
-  // 🚫 If not logged in
   if (!user) {
     return (
       <div className="text-center text-white p-10">
@@ -23,116 +44,85 @@ export default function TrackPage() {
     );
   }
 
-  // ➕ Function to add new skill
-  const handleAddSkill = () => {
-    if (!newSkill.trim()) return;
-
-    const newSkillObj = {
-      id: Date.now(),
-      name: newSkill.trim(),
-      progress: 0,
-    };
-
-    setSkills([...skills, newSkillObj]);
-    setNewSkill("");
-  };
-
-  // 🔼🔽 Function to update progress
-  const handleProgress = (id, change) => {
-    setSkills((prevSkills) =>
-      prevSkills.map((skill) =>
-        skill.id === id
-          ? { ...skill, progress: Math.min(100, Math.max(0, skill.progress + change)) }
-          : skill
-      )
-    );
-  };
-
-  // ❌ Delete a skill
-  const handleDelete = (id) => {
-    setSkills(skills.filter((skill) => skill.id !== id));
-  };
-
-  // 🧩 UI section
   return (
     <section className="min-h-screen bg-[#1E1E2F] text-white py-20 px-6">
       <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-4xl font-bold mb-4">
-          Track Your <span className="text-[#8B5CF6]">Skill Progress</span>
+          Track Your <span className="text-[#8B5CF6]">Learning Progress</span>
         </h1>
         <p className="text-gray-400 mb-12">
-          Add your own skills and track your learning progress visually.
+          Level up! Pick a skill and mark your progress as you grow.
         </p>
 
-        {/* Add New Skill Input */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
-          <input
-            type="text"
-            value={newSkill}
-            onChange={(e) => setNewSkill(e.target.value)}
-            placeholder="Enter a new skill (e.g., Next.js)"
-            className="w-full sm:w-80 px-4 py-2 rounded-lg bg-[#2A2A3D] text-white placeholder-gray-400 outline-none focus:ring-2 focus:ring-[#8B5CF6] focus:bg-[#33334A] transition-all"
-          />
-          <button
-            onClick={handleAddSkill}
-            className="bg-[#8B5CF6] hover:bg-[#7C3AED] px-6 py-2 rounded-lg font-semibold"
-          >
-            Add Skill
-          </button>
-        </div>
-
-        {/* Skill List */}
-        <div className="space-y-6">
-          {skills.length === 0 ? (
-            <p className="text-gray-400">
-              No skills added yet. Start by adding one above!
-            </p>
-          ) : (
-            skills.map((skill) => (
-              <div
-                key={skill.id}
-                className="bg-[#242437] p-6 rounded-2xl text-left border border-[#2A2A3D]"
-              >
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="text-xl font-semibold">{skill.name}</h3>
-                  <div className="flex items-center gap-3">
-                    <span className="text-[#8B5CF6]">{skill.progress}%</span>
-                    <button
-                      onClick={() => handleDelete(skill.id)}
-                      className="text-red-400 hover:text-red-500 text-sm"
-                    >
-                      ✕
-                    </button>
+        {/* Skill Selection */}
+        {!selectedSkill ? (
+          <div>
+            <h2 className="text-xl font-semibold mb-6">Select a Skill to Track</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {predefinedSkills?.map((skill) => (
+                <button
+                  key={skill.id}
+                  onClick={() => handleSelectSkill(skill)}
+                  className="bg-[#2A2A3D] hover:bg-[#3A3A4D] p-5 rounded-xl transition-all text-left"
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl">{skill.icon}</span>
+                    <h3 className="font-semibold text-lg">{skill.name}</h3>
                   </div>
-                </div>
+                  <p className="text-sm text-gray-400">{skill.category}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div>
+            {/* Selectedv  Skill Section */}
+            <h2 className="text-2xl font-semibold mb-2 flex items-center justify-center gap-2">
+              {selectedSkill.icon} {selectedSkill.name}
+            </h2>
+            <p className="text-gray-400 mb-6">
+              Category: {selectedSkill.category} — Level: {selectedSkill.level}
+            </p>
 
-                {/* Progress Bar */}
-                <div className="w-full bg-[#1E1E2F] h-3 rounded-full mb-4">
-                  <div
-                    className="h-3 bg-[#8B5CF6] rounded-full"
-                    style={{ width: `${skill.progress}%` }}
-                  ></div>
-                </div>
+            {/* Progress Bar */}
+            <div className="w-full bg-[#1E1E2F] h-4 rounded-full mb-6">
+              <div
+                className="h-4 bg-[#8B5CF6] rounded-full transition-all"
+                style={{ width: `${progress}%` }}
+              ></div>
+            </div>
+            <p className="text-[#8B5CF6] font-semibold mb-6">
+              Progress: {progress}%
+            </p>
 
-                {/* Buttons */}
-                <div className="flex justify-end gap-3">
-                  <button
-                    onClick={() => handleProgress(skill.id, -10)}
-                    className="px-4 py-2 bg-[#2A2A3D] hover:bg-[#3A3A4D] rounded-lg text-sm"
+            {/* Milestonees Checklist */}
+            <div className="bg-[#242437] p-6 rounded-2xl text-left border border-[#2A2A3D] mb-8">
+              <h3 className="text-xl font-semibold mb-4">Milestones</h3>
+              <ul className="space-y-3">
+                {milestones.map((m, index) => (
+                  <li
+                    key={index}
+                    onClick={() => toggleMilestone(index)}
+                    className={`cursor-pointer flex items-center justify-between px-4 py-2 rounded-lg ${
+                      m.completed ? "bg-[#3B3B4D] text-[#8B5CF6]" : "bg-[#2A2A3D]"
+                    }`}
                   >
-                    - Progress
-                  </button>
-                  <button
-                    onClick={() => handleProgress(skill.id, +10)}
-                    className="px-4 py-2 bg-[#8B5CF6] hover:bg-[#7C3AED] rounded-lg text-sm"
-                  >
-                    + Progress
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+                    <span>{m.name}</span>
+                    {m.completed && <span>✅</span>}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Back Button */}
+            <button
+              onClick={() => setSelectedSkill(null)}
+              className="bg-[#2A2A3D] hover:bg-[#3A3A4D] px-6 py-2 rounded-lg text-sm"
+            >
+              ← Back to Skills
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
