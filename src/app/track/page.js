@@ -3,6 +3,7 @@
 import { useState } from "react";
 import useCheckUser from "@/lib/checkUser";
 import useFetch from "@/hooks/useFetch";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function TrackPage() {
   const { user, loading } = useCheckUser();
@@ -10,28 +11,84 @@ export default function TrackPage() {
 
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [milestones, setMilestones] = useState([]);
+  const [progress, setProgress] = useState(0);
 
-  
-  const handleSelectSkill = (skill) => {
-    setSelectedSkill(skill);
-    setMilestones(skill.milestones.map((m) => ({ name: m, completed: false })));
+  // Load saved progress from Supabase
+  const loadUserProgress = async (skill) => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from("skill_progress")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("skill_id", skill.id)
+      .single();
+
+    if (error) {
+      console.error("Error loading progress:", error);
+    }
+
+    if (data) {
+      setMilestones(data.milestones);
+      setProgress(data.progress);
+    } else {
+      // fresh milestones if no data
+      const fresh = skill.milestones.map((m) => ({ name: m, completed: false }));
+      setMilestones(fresh);
+      setProgress(0);
+    }
   };
 
-  //  Toggle milestone completion
-  const toggleMilestone = (index) => {
+  // Save progress to Supabase
+  
+  const saveUserProgress = async (updatedMilestones) => {
+    if (!user || !selectedSkill) return;
+
+    const completedCount = updatedMilestones.filter((m) => m.completed).length;
+    const percent = Math.round((completedCount / updatedMilestones.length) * 100);
+
+    setProgress(percent);
+
+    const { data, error } = await supabase
+      .from("skill_progress")
+      .upsert(
+        {
+          user_id: user.id,
+          skill_id: selectedSkill.id,
+          milestones: updatedMilestones,
+          progress: percent,
+        },
+        { onConflict: ["user_id", "skill_id"] } 
+      );
+
+    if (error) console.error("Supabase upsert error:", error);
+    else console.log("Saved progress:", data);
+  };
+
+  // Select a skill
+  
+  const handleSelectSkill = async (skill) => {
+    setSelectedSkill(skill);
+    await loadUserProgress(skill);
+  };
+
+  // Toggle milestone completion
+  
+  const toggleMilestone = async (index) => {
     const updated = [...milestones];
     updated[index].completed = !updated[index].completed;
     setMilestones(updated);
+    await saveUserProgress(updated);
   };
 
   // Calculate progress
-  const progress =
+  const currentProgress =
     milestones.length > 0
-      ? Math.round(
-          (milestones.filter((m) => m.completed).length / milestones.length) * 100
-        )
+      ? Math.round((milestones.filter((m) => m.completed).length / milestones.length) * 100)
       : 0;
 
+  // Render loading / login
+  
   if (loading || skillsLoading) {
     return <div className="text-center text-white p-10">Loading your tracker...</div>;
   }
@@ -44,6 +101,8 @@ export default function TrackPage() {
     );
   }
 
+
+  // Render component
   return (
     <section className="min-h-screen bg-[#1E1E2F] text-white py-20 px-6">
       <div className="max-w-4xl mx-auto text-center">
@@ -76,7 +135,7 @@ export default function TrackPage() {
           </div>
         ) : (
           <div>
-            {/* Selectedv  Skill Section */}
+            {/* Selected Skill Section */}
             <h2 className="text-2xl font-semibold mb-2 flex items-center justify-center gap-2">
               {selectedSkill.icon} {selectedSkill.name}
             </h2>
@@ -88,14 +147,14 @@ export default function TrackPage() {
             <div className="w-full bg-[#1E1E2F] h-4 rounded-full mb-6">
               <div
                 className="h-4 bg-[#8B5CF6] rounded-full transition-all"
-                style={{ width: `${progress}%` }}
+                style={{ width: `${currentProgress}%` }}
               ></div>
             </div>
             <p className="text-[#8B5CF6] font-semibold mb-6">
-              Progress: {progress}%
+              Progress: {currentProgress}%
             </p>
 
-            {/* Milestonees Checklist */}
+            {/* Milestones */}
             <div className="bg-[#242437] p-6 rounded-2xl text-left border border-[#2A2A3D] mb-8">
               <h3 className="text-xl font-semibold mb-4">Milestones</h3>
               <ul className="space-y-3">
