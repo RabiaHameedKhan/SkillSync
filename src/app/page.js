@@ -4,8 +4,30 @@
 "use client";
 import Link from "next/link";
 import { BookOpen, BarChart3, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
+
+
+
 
 export default function Home() {
+
+  const [user, setUser] = useState(null);
+
+ useEffect(() => {
+    async function getUser() {
+      const { data } = await supabase.auth.getUser();
+      
+      setUser(data.user);
+    }
+    getUser();
+  }, []);
+
   return (
     <>
       {/* HERO SECTION */}
@@ -34,7 +56,7 @@ export default function Home() {
 
           <div className="flex justify-center gap-4">
             <Link
-              href="/login"
+              href={user ? "/skills" : "/login"}
               className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-6 py-3 rounded-xl text-lg transition-all duration-200"
             >
               Get Started
